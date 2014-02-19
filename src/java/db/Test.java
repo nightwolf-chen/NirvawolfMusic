@@ -23,8 +23,8 @@ public class Test {
                 
                 ConnectionManager conMgr = new ConnectionManager();
                 Connection con = conMgr.getConnection();
-                Statement stmt = EasyDatabaseAccessor.createStatement(con);
-                ResultSet rs = EasyDatabaseAccessor.select(stmt,"select count(songid) from song");
+                Statement stmt = OnlineDatabaseAccessor.createStatement(con);
+                ResultSet rs = OnlineDatabaseAccessor.select(stmt,"select count(songid) from song");
                 
                 rs.close();
                 rs = null;

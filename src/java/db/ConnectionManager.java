@@ -9,7 +9,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,40 +26,6 @@ public class ConnectionManager {
     private String userName = "root";
     private String passWord = "123";
 
-    /*
-     {"mysql-5.1":[
-     {
-     "name":"mysql-4f700",
-     "label":"mysql-5.1",
-     "plan":"free",
-     "tags":["mysql","mysql-5.1","relational"],
-     "credentials":{
-     "name":"d6d665aa69817406d8901cd145e05e3c6",
-     "hostname":"mysql-node01.us-east-1.aws.af.cm",
-     "host":"mysql-node01.us-east-1.aws.af.cm",
-     "port":3306,
-     "user":"uB7CoL4Hxv9Ny",
-     "username":"uB7CoL4Hxv9Ny",
-     "password":"pzAx0iaOp2yKB"
-     }
-     },
-     {
-     "name":"mysql-f1a13",
-     "label":"mysql-5.1",
-     "plan":"free",
-     "tags":["mysql","mysql-5.1","relational"],
-     "credentials":{
-     "name":"db777ab9da32047d99dd6cdae3aafebda",
-     "hostname":"mysql-node01.us-east-1.aws.af.cm",
-     "host":"mysql-node01.us-east-1.aws.af.cm",
-     "port":3306,
-     "user":"uJHApvZF6JBqT",
-     "username":"uJHApvZF6JBqT",
-     "password":"p146KmfkqGYmi"
-     }
-     }
-     ]}
-     */
     public ConnectionManager() {
         //VCAP_SERVICES
         String databaseInfo = java.lang.System.getenv("VCAP_SERVICES");
@@ -77,21 +42,9 @@ public class ConnectionManager {
                 this.userName = credentials.getString("username");
                 this.passWord = credentials.getString("password");
 
-//                this.ServerHost = "ap01-user01.c0ye1hvnkw6z.ap-southeast-1.rds.amazonaws.com";
-//                this.port = "3306";
-//                this.DatabaseName = "df610e5967901454283fef6c5512c5dab";
-//                this.userName = "u2ziJcRCIYKmR";
-//                this.passWord = "pFP2f91iXS1m5";
             } catch (JSONException ex) {
                 Logger.getLogger(ConnectionManager.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }else{
-
-                this.ServerHost = "localhost";
-                this.port = "10000";
-                this.DatabaseName = "df610e5967901454283fef6c5512c5dab";
-                this.userName = "uCgkiTgUzFbcz";
-                this.passWord = "p6v2zg4UBmR0C";
         }
     }
 
@@ -114,4 +67,17 @@ public class ConnectionManager {
         return "jdbc:mysql://" + ServerHost + ":" + this.port + "/" + DatabaseName + "?CharacterEncoding=" + Encode;
     }
 
+    public String getDatabaseName() {
+        return DatabaseName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPassWord() {
+        return passWord;
+    }
+    
+    
 }
