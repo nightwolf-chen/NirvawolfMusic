@@ -7,7 +7,6 @@ package db;
 import com.mysql.jdbc.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Stack;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.json.JSONArray;
@@ -72,15 +71,11 @@ public class ConnectionManager {
         if (databaseInfo != null) {
             try {
                 JSONObject jsonObject = new JSONObject(databaseInfo);
-                
-                JSONArray mysqlServices = jsonObject.getJSONArray("mysql-5.1");
-                
-                JSONObject mysqlObj = mysqlServices.getJSONObject(0);
-                
+                JSONObject mysqlObj = jsonObject.getJSONArray("mysql-5.1").getJSONObject(0);
                 JSONObject credentials = mysqlObj.getJSONObject("credentials");
                 
-                this.ServerHost = credentials.getString("host");
-                this.port = credentials.getString("port");
+                this.ServerHost = credentials.getString("hostname");
+                this.port = String.valueOf(credentials.getInt("port"));
                 this.DatabaseName = credentials.getString("name");
                 this.userName = credentials.getString("username");
                 this.passWord = credentials.getString("password");
@@ -107,8 +102,8 @@ public class ConnectionManager {
         return con;
     }
 
-    private String getConnectionStr() {
-        return "jdbc:mysql://" + ServerHost + ":3306/" + DatabaseName + "?characterEncoding=" + Encode;
+    public String getConnectionStr() {
+        return "jdbc:mysql://" + ServerHost + ":3306/" + DatabaseName + "?CharacterEncoding=" + Encode;
     }
 
 }
